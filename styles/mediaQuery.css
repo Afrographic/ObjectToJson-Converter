@@ -1,0 +1,115 @@
+@media (max-width: 1000px) {
+  body{
+    padding-bottom: 100px;
+  }
+  .header {
+    width: 100%;
+    padding-top: 10px;
+  }
+  .wrapper {
+    width: 100%;
+    margin-bottom: 29px;
+
+  }
+  h1 {
+    font-size: 20px !important;
+  }
+
+  .child div {
+    font-size: 9px;
+  }
+
+  .child p {
+    font-size: 10px;
+  }
+
+  .titleExample {
+    font-size: 16px;
+  }
+
+  .contactMe {
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 50px;
+  }
+
+  .workBox {
+    width: 100%;
+
+    opacity: 0;
+  }
+
+  .renderBox {
+    position: absolute;
+    padding: 13px;
+  }
+
+  .inputBoxMobile.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .inputBoxMobile.disabled {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .renderBoxMobile.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .renderBoxMobile.disabled {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .renderButton {
+    position: fixed;
+    left: 45%;
+    bottom: 5px;
+    transform: translate(-50%, -50%);
+    top: auto;
+  }
+
+  .notifWidget {
+    font-size: 11px;
+  }
+
+  .examples {
+    width: auto;
+    gap: 16px;
+  }
+  .area {
+    width: 95%;
+  }
+
+  .exampleWrapper {
+    padding: 16px;
+  }
+
+  .footer {
+    font-size: 11px;
+  }
+  .show {
+    top: -39px;
+  }
+
+  .copyWrapper {
+    position: fixed;
+    top: auto;
+    left: 50%;
+    right: auto;
+    bottom: 15px;
+    transform: translate(-50%, -50%);
+  } 
+
+  .copyWrapper.disabled {
+    bottom: auto;
+    opacity: 0 !important;
+    pointer-events: none;
+  }
+  .renderButton.disabled {
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+}

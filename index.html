@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-97RQTX6B15"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-97RQTX6B15');
+    </script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dummy Data Generator</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/mediaQuery.css">
+    <link rel="icon" href="images/dart-icon.png">
+    <script>
+        function $(target) {
+            return document.querySelector(target);
+        }
+    </script>
+
+   
+</head>
+
+<body>
+
+    <div class="header">
+        <img src="images/dart.png" alt="">
+        <h1>Random Object Generator</h1>
+        <div class="soon">Dart package avalaible soon</div>
+    </div>
+
+
+    <div class="notifWidget  errorBox disabled">
+        <img src="images/info.svg" alt="">
+        <span>Invalid class definition</span>
+    </div>
+
+    <div class="notifWidget sucessMessage disabled">
+        <img src="images/check.svg" alt="">
+        <span>Object generated successFully</span>
+    </div>
+
+    <div class="notifWidget successCopy disabled">
+        <img src="images/copy.svg" alt="">
+        <span>Object copied successFully</span>
+    </div>
+
+    <div class="wrapper">
+        <div class="workBox inputBoxMobile active">
+            <div class="title">Class Definition</div>
+            <textarea class="area" id="schema" spellcheck="false" autocomplete="false"
+                placeholder="Place your class definition here and click generate to get a dummy object from your class"></textarea>
+        </div>
+        <div class="renderButton" onClick="generateDummyData();">
+            <div class="toolTip hide">Generate object</div>
+            <img src="images/cog.svg" alt="" class="spinnerObject">
+        </div>
+
+        <div class="workBox renderBox renderBoxMobile disabled">
+            <div class="title">Random Object</div>
+            <div id="renderArea" class="area empty">
+            </div>
+            <div class="copyWrapper disabled">
+                <img src="images/addNew.svg" alt="" class="addNewClass" onclick="resetFields()">
+                <div class="copy " onclick="copy()">
+                    <img src="images/copy.svg" alt="">
+                    <span>Copy</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="exampleWrapper">
+        <h2 class="titleExample">Example</h2>
+        <div class="examples">
+            <div class="child classDef">
+                <p>Class Definition</p>
+                <div>
+                    class Afro {
+                    int idUser;
+                    double? height;
+                    bool isFound;
+                    String name;
+                    }
+                </div>
+            </div>
+            <div class="child outputDef">
+                <p>Possible Random Object</p>
+                <div>
+                    Afro softlioklankhwu = new Afro( idUser : 658, height : 481.06, isFound : false, name :
+                    "AnkhoILiAfroIAnkhA", );
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="contactMe">
+        <div>Any issue with the tool?</div>
+        <a href="https://github.com/Afrographic/dart_dummy_data_generator/issues" class="linkWhatsapp">
+            <img src="images/socialMedia/github.svg" alt="">
+            Feel free to open an issue on github
+        </a>
+    </div>
+
+    <div class="socialMedias">
+        <a href="https://www.youtube.com/channel/UCwh-5okZXmjDxoZOF4Mz2qg" target="_blank">
+            <img src="images/socialMedia/youtube.svg" alt="">
+        </a>
+        <a href="https://github.com/Afrographic/dart_dummy_data_generator" target="_blank">
+            <img src="images/socialMedia/github.svg" alt="">
+        </a>
+        <a href="https://www.instagram.com/afrographix_/?hl=fr" target="_blank">
+            <img src="images/socialMedia/insta.svg" alt="">
+        </a>
+        <a href="https://twitter.com/frographics1" target="_blank">
+            <img src="images/socialMedia/twitter.svg" alt="">
+        </a>
+        <a href="https://web.facebook.com/brunel.tesse/" target="_blank">
+            <img src="images/socialMedia/facebook.svg" alt="">
+        </a>
+    </div>
+
+    <p class="footer">Copyright 2022 - Afrographix MIT Licence</p>
+
+    <script src="generator.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
