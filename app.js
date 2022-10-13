@@ -1,121 +1,36 @@
-
-
-// Hosted on Netlify
-async function dummyLoader() {
-    $(".spinnerObject").classList.add("spinner");
-    await sleep(500);
-    $(".spinnerObject").classList.remove("spinner");
+function extractClassName(input) {
+    let re = /class\s+([a-zA-Z_]+)\s*.*/;
+    let m = re.exec(input);
+    return capitalizeFirstLetter(m[1]);
 }
 
-async function generateDummyData() {
-    $("#renderArea").innerHTML = "";
-    await dummyLoader();
-    let userInput = $("#schema").value;
-    if (validDartClassSchema(userInput)) {
+function extractRawFields(input) {
+    let re = /.*\s*{(.*)}\s*.*/;
+    let m = re.exec(input);
+    return m[1];
+}
 
-        let fieldString = extractFields(userInput);
-        let fieldObjects = parseFieldsStringToFieldObject(fieldString);
-        let dummyData = renderDummyDataWithParameters(fieldObjects, userInput);
+function extractFields(rawFields) {
+    let fields = [];
+    rawFields = rawFields.split(";");
+    rawFields.pop();
+    for (const fieldItem of rawFields) {
 
-        $("#renderArea").classList.remove("empty");
-        $("#renderArea").innerHTML = `${dummyData}`;
-        // Show successfull work
-        showInfoWidget($(".sucessMessage"))
-        // Show the copy button
-        showCopyButton();
-        // Mobile behavior
-        showRenderViewForMobile();
-        hideGenerateButton();
-    } else {
-        $("#renderArea").classList.add("empty");
-        showInfoWidget($(".errorBox"));
-        hideCopyButton();
+        fields.push(extractSingleField(fieldItem));
     }
+    return fields;
 }
 
-function showRenderViewForMobile() {
-    hideInputViewForMobile();
-    $(".renderBoxMobile").classList.remove("disabled");
-    $(".renderBoxMobile").classList.add("active");
+function extractSingleField(rawField) {
+    rawField = rawField.split(":");
+    return rawField[0]
 }
 
-function hideInputViewForMobile() {
-    $(".inputBoxMobile").classList.add("disabled");
-    $(".inputBoxMobile").classList.remove("active");
-}
-
-function showInputViewForMobile() {
-    HideRenderViewForMobile();
-    $(".inputBoxMobile").classList.remove("disabled");
-    $(".inputBoxMobile").classList.add("active");
-}
-
-function HideRenderViewForMobile() {
-    $(".renderBoxMobile").classList.add("disabled");
-    $(".renderBoxMobile").classList.remove("active");
-}
-
-function hideGenerateButton() {
-    $(".renderButton").classList.add("disabled");
-}
-function showGenerateButton() {
-    $(".renderButton").classList.remove("disabled");
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 }
 
 
-function showCopyButton() {
-    $(".copyWrapper").classList.remove("disabled");
-    $(".copyWrapper").classList.add("active");
-}
-
-function hideCopyButton() {
-    $(".copyWrapper").classList.add("disabled");
-    $(".copyWrapper").classList.remove("active");
-}
-
-async function showInfoWidget(infoWidget) {
-    infoWidget.classList.remove("disabled");
-    infoWidget.classList.add("visible");
-    await sleep(2000);
-    infoWidget.classList.remove("visible");
-    infoWidget.classList.add("disabled");
-}
-
-function showToolTip() {
-    $(".renderButton").addEventListener("mouseover", function (e) {
-        $(".toolTip").classList.remove("hide");
-        $(".toolTip").classList.add("show");
-    })
-    $(".renderButton").addEventListener("mouseout", function (e) {
-        $(".toolTip").classList.add("hide");
-        $(".toolTip").classList.remove("show");
-    })
-}
-
-async function copy() {
-    await navigator.clipboard.writeText($("#renderArea").innerText.trim());
-    showInfoWidget($(".successCopy"));
-}
-
-
-showToolTip();
-
-async function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-function resetFields() {
-    $("#schema").value = '';
-    $("#renderArea").innerHTML = '';
-    $("#renderArea").classList.add("empty");
-    hideCopyButton();
-    showInputViewForMobile();
-    showGenerateButton();
-}
-
-// class Afro { int idUser; double?height; bool isFound; String name; }
-
-// https://object-generator.trader-app.net/
-// add add to homescreen feature
-
-
+let rawFields = extractRawFields(`class seins{taille:string="";age:int=45;}`);
+let fields = extractFields(rawFields);
+console.log(fields);
