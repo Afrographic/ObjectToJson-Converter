@@ -20,16 +20,25 @@
 </head>
 
 <body>
-    <h1>TypeScript Object-Json Generator</h1>
-    <p>Defintion de la classe</p>
+    <div class="languages">
+        <div class="languageItem active" onclick="changeLanguage(this)">
+            TypeScript
+        </div>
+        <div class="languageItem" onclick="changeLanguage(this)">
+            Dart
+        </div>
+    </div>
+    <h1> <span id="currentLanguage">TypeScript</span>  Object-Json Generator</h1>
+    <p>Class definition</p>
     <p><textarea  id="input"></textarea></p>
     <button onclick="generate(this)">Generer</button>
-    <p>Resultat</p>
+    <p>Generated code <button onclick="copy()">Copier</button></p>
     <textarea  id="result"></textarea>
-    <p><button onclick="copy()">Copier</button></p>
 
-    <script src="app.js"></script>
-    <script src="interface.js"></script>
+
+    <script src="scripts/app.js"></script>
+    <script src="scripts/app_dart.js"></script>
+    <script src="scripts/interface.js"></script>
 </body>
 
 </html>

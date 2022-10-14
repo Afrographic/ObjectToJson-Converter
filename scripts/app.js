@@ -37,7 +37,7 @@ function generateParsingFields(fields, className) {
     let res = "";
     className = className.toLowerCase();
     for (const fieldItem of fields) {
-        res += `${className}.${fieldItem} = ${className}JSON.${fieldItem};`;
+        res += `${className}.${fieldItem} = ${className}JSON.${fieldItem};\n`;
     }
     return res;
 }
@@ -68,11 +68,11 @@ function generateFromJSONarray(className) {
     let lower = className.toLowerCase();
     let res = `
         static fromJSONArray(${lower}JSONArray: any) {
-            let ${lower}s: ${className}[] = [];
+            let ${lower}Array: ${className}[] = [];
             for (const ${lower}Item of ${lower}JSONArray) {
-                ${lower}s.push(this.fromJSON(${lower}Item));
+                ${lower}Array.push(this.fromJSON(${lower}Item));
             }
-            return ${lower}s;
+            return ${lower}Array;
         }
     `
     return res;
@@ -92,22 +92,16 @@ function generateToJSON(fields, className) {
 }
 
 
-function generatetoJSONarray(className) {
+function generateToJSONarray(className) {
     let lower = className.toLowerCase();
     let res = `
     static toJSONArray(${lower}s: ${className}[]) {
-        let ${lower}sJSON:any = [];
+        let ${lower}JSONArray:any = [];
         for (const ${lower}Item of ${lower}s) {
-            ${lower}sJSON.push(this.toJSON(${lower}Item));
+            ${lower}JSONArray.push(this.toJSON(${lower}Item));
         }
-        return ${lower}sJSON;
+        return ${lower}JSONArray;
     }`
 
     return res;
 }
-
-let input =`class lol{age:string;taille:number;email:string}`
-let rawFields = extractRawFields(input);
-let fields = extractFields(rawFields);
-let className = extractClassName(input);
-console.log(generateToJSON(fields, className));
