@@ -106,7 +106,7 @@ function generatetoJSONarray(className) {
     return res;
 }
 
-let input = `class Fesse{taille:string="";age:number=45;email:string="";size:number=47;}`;
+let input =`class lol{age:string;taille:number;email:string}`
 let rawFields = extractRawFields(input);
 let fields = extractFields(rawFields);
 let className = extractClassName(input);
