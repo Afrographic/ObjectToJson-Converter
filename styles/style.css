@@ -75,12 +75,12 @@ class Lol2{
         };
     }
 
-    static toJSONArray(projectsJSON: Project[]) {
-        let projects:any = [];
-        for (const projectItem of projectsJSON) {
-            projects.push(this.fromJSON(projectItem));
+    static toJSONArray(projects: Project[]) {
+        let projectsJSON:any = [];
+        for (const projectItem of projects) {
+            projects.push(this.toJSON(projectItem));
         }
-        return projects;
+        return projectsJSON;
     }
 
 
