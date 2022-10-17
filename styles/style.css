@@ -1,17 +1,24 @@
 * {
   font-family: "arial";
+  box-sizing: border-box;
 }
 
 textarea {
-  width: 100%;
   height: 400px;
+  resize: none;
+  padding:16px;
+  border:1px solid rgb(215, 215, 215);
+  border-radius: 16px;
+}
+
+textarea:focus{
+  outline: none;
 }
 
 .languages {
   display: flex;
   padding: 16px;
   border-radius: 8px;
-  border: 1px solid #aaa;
   display: flex;
   gap: 16px;
   justify-content: space-between;
@@ -22,9 +29,46 @@ textarea {
   color: white;
 }
 
+.languageItem:not(.active) {
+  background-color: rgb(231, 231, 231);
+  color: rgb(174, 174, 174);
+}
+
 .languageItem {
   padding: 16px;
   transition: 0.25s;
   cursor: pointer;
   border-radius: 16px;
+}
+
+
+
+.w100{
+  width: 100%;
+}
+
+.row {
+  display: flex;
+}
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.aic {
+  align-items: center;
+}
+.jcc {
+  justify-content: center;
+}
+.jcsb{
+  justify-content: space-between;
+}
+
+.f1{
+  flex:1;
+}
+
+.tac{
+  text-align: center;
 }
