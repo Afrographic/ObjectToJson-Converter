@@ -97,3 +97,5 @@ async function copy() {
     await navigator.clipboard.writeText(res);
     alert("Note copier avec succes");
 }
+
+

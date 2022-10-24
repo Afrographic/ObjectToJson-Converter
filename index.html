@@ -9,6 +9,7 @@
     <title>JSON - Object Generator</title>
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="styles/mediaQuery.css">
+    <link rel="stylesheet" href="styles/animate.css">
     <link rel="icon" href="images/ankh.png">
     <script>
         function $(target) {
@@ -28,14 +29,17 @@
             Dart
         </div>
     </div>
-    <h1 class="tac"> <span id="currentLanguage">TypeScript</span> Object-Json Generator</h1>
-    <div class="row" style="gap:16px;">
+    <h1 class="tac primary"> <span id="currentLanguage">TypeScript</span> Object-Json Generator</h1>
+    <div class="row aic jcc" style="gap:16px;">
         <div class="f1">
-            <p class="tac">Class definition <button onclick="generate(this)">Generer</button></p>
+            <p class="tac white">Class definition <button onclick="generate(this)">Generer</button></p>
             <textarea id="input" class="w100"></textarea>
         </div>
+        <div class="generateHolder  row aic jcc pointer scaleOnHover p8 spin" >
+            <img src="images/cog.svg" alt="" >
+        </div>
         <div class="f1">
-            <p class="tac">Generated code <button onclick="copy()">Copier</button></p>
+            <p class="tac white">Generated code <button onclick="copy()">Copier</button></p>
             <textarea id="result" class="w100"></textarea>
         </div>
 
