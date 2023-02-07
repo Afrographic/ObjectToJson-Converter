@@ -32,8 +32,10 @@ function generateTypeScriptCode(input) {
     let toJSONarray = generateFromJSONarray(className);
     let fromJSON = generateToJSON(fields, className);
     let fromJSONarray = generateToJSONarray(className);
+    let clone = generate_clone(fields, className);
 
     res = `
+    ${clone}
     ${toJSON}
     ${toJSONarray}
     ${fromJSON}
@@ -47,18 +49,25 @@ function generateDartCode(input) {
         alert("Invalid dart class definition");
         return;
     }
-    
+
     let className = extractClassName_dart(input);
     let fieldString = extractFields_dart(input);
     let fields = parseFieldsStringToFieldObject(fieldString);
 
     // Launch generator
-    let toJSON = generateFromJSON_dart(fields, className);
-    let toJSONarray = generateFromJSONarray_dart(className);
-    let fromJSON = generateToJSON_dart(fields, className);
-    let fromJSONarray = generateToJSONarray_dart(className);
+    let toJSON = generate_from_json_dart(fields, className);
+    let toJSONarray = generate_from_json_array_dart(className);
+    let fromJSON = generate_to_json_dart(fields, className);
+    let fromJSONarray = generate_to_json_array_dart(className);
+
+    let init_state = init_state_var(fields, className);
+    let constructor = generate_constructor(fields, className);
+    let get_payload = get_payload_dart(fields);
 
     res = `
+    ${constructor}
+    ${init_state}
+    ${get_payload}
     ${toJSON}
     ${toJSONarray}
     ${fromJSON}

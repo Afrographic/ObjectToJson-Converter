@@ -1,7 +1,7 @@
 function extractClassName(input) {
     let re = /class\s+([a-zA-Z_]+)\s*.*/;
     let m = re.exec(input);
-    return capitalizeFirstLetter(m[1]);
+    return m[1];
 }
 
 function extractRawFields(input) {
@@ -37,7 +37,7 @@ function generateParsingFields(fields, className) {
     let res = "";
     className = className.toLowerCase();
     for (const fieldItem of fields) {
-        res += `${className}.${fieldItem} = ${className}JSON.${fieldItem};\n`;
+        res += `${className}.${fieldItem} = ${className}_json.${fieldItem};\n`;
     }
     return res;
 }
@@ -55,7 +55,8 @@ function generateParsingFieldsToJSON(fields, className) {
 function generateFromJSON(fields, className) {
     let lowerClassName = className.toLowerCase();
     let parsingFields = generateParsingFields(fields, className);
-    let res = `static fromJSON(${lowerClassName}JSON:any) {
+    let res =
+        `static from_json(${lowerClassName}_json:any) {
         let ${lowerClassName}:${className} = new ${className}();
         ${parsingFields}
         return ${lowerClassName};
@@ -67,10 +68,10 @@ function generateFromJSON(fields, className) {
 function generateFromJSONarray(className) {
     let lower = className.toLowerCase();
     let res = `
-        static fromJSONArray(${lower}JSONArray: any) {
+        static from_json_array(${lower}_json_array: any) {
             let ${lower}Array: ${className}[] = [];
-            for (const ${lower}Item of ${lower}JSONArray) {
-                ${lower}Array.push(this.fromJSON(${lower}Item));
+            for (const ${lower}Item of ${lower}_json_array) {
+                ${lower}Array.push(this.from_json(${lower}Item));
             }
             return ${lower}Array;
         }
@@ -82,7 +83,7 @@ function generateToJSON(fields, className) {
     let lowerClassName = className.toLowerCase();
     let parsingFields = generateParsingFieldsToJSON(fields, className);
     let res = `
-    static toJSON(${lowerClassName}:${className}) {
+    static to_json(${lowerClassName}:${className}) {
         return {
              ${parsingFields}
         };
@@ -91,16 +92,39 @@ function generateToJSON(fields, className) {
     return res;
 }
 
+function generate_clone(fields, className) {
+    let lowerClassName = className.toLowerCase();
+    let clone_fields = generate_fields_to_clone(fields, className);
+    let res = `
+    clone():${className} {
+        let ${lowerClassName}:${className} = new ${className}();
+        ${clone_fields}
+        return  ${lowerClassName};
+    }`;
+
+    return res;
+}
+
+function generate_fields_to_clone(fields, className) {
+    let res = "";
+    className = className.toLowerCase();
+    for (const fieldItem of fields) {
+        res += `${className}.${fieldItem} = this.${fieldItem};\n`;
+    }
+    res = res.trim().substring(0, res.length - 2);
+    return res;
+}
+
 
 function generateToJSONarray(className) {
     let lower = className.toLowerCase();
     let res = `
-    static toJSONArray(${lower}s: ${className}[]) {
-        let ${lower}JSONArray:any = [];
+    static to_json_array(${lower}s: ${className}[]) {
+        let ${lower}_json_array:any = [];
         for (const ${lower}Item of ${lower}s) {
-            ${lower}JSONArray.push(this.toJSON(${lower}Item));
+            ${lower}_json_array.push(this.to_json(${lower}Item));
         }
-        return ${lower}JSONArray;
+        return ${lower}_json_array;
     }`
 
     return res;

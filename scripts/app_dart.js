@@ -56,11 +56,11 @@ function convertToFieldObject(fieldStringItem) {
 
 // Code generator functions
 
-function generateFromJSON_dart(fields, className) {
+function generate_from_json_dart(fields, className) {
     let lowerClassName = className.toLowerCase();
     let parsingFields = generateParsingFields_dart(fields, lowerClassName);
     let res = `
-    static ${className} fromJSON(${lowerClassName}JSON) {
+    static ${className} from_json(${lowerClassName}JSON) {
         return ${className}(
             ${parsingFields}
         );
@@ -77,13 +77,13 @@ function generateParsingFields_dart(fields, lowerClassName) {
     return res;
 }
 
-function generateFromJSONarray_dart(className) {
+function generate_from_json_array_dart(className) {
     let lower = className.toLowerCase();
     let res = `
-        static List<${className}> fromJSONArray(${lower}JSONArray) {
+        static List<${className}> from_json_array(${lower}JSONArray) {
             List<${className}> ${lower}Array = [];
             for (var ${lower}Item in ${lower}JSONArray) {
-                ${lower}Array.add(fromJSON(${lower}Item));
+                ${lower}Array.add(from_json(${lower}Item));
             }
             return ${lower}Array;
         }
@@ -91,11 +91,11 @@ function generateFromJSONarray_dart(className) {
     return res;
 }
 
-function generateToJSON_dart(fields, className) {
+function generate_to_json_dart(fields, className) {
     let lowerClassName = className.toLowerCase();
-    let parsingFields = generateParsingFieldsToJSON_dart(fields, lowerClassName);
+    let parsingFields = generateParsingFieldsto_json_dart(fields, lowerClassName);
     let res = `
-    static dynamic toJSON(${className} ${lowerClassName}) {
+    static dynamic to_json(${className} ${lowerClassName}) {
         Map<String,dynamic> data = HashMap();
         data.addAll({
             ${parsingFields}
@@ -106,7 +106,7 @@ function generateToJSON_dart(fields, className) {
     return res;
 }
 
-function generateParsingFieldsToJSON_dart(fields, lowerClassName) {
+function generateParsingFieldsto_json_dart(fields, lowerClassName) {
     let res = "";
     for (const fieldItem of fields) {
         res += `"${fieldItem.label}" : ${lowerClassName}.${fieldItem.label},\n`;
@@ -115,16 +115,82 @@ function generateParsingFieldsToJSON_dart(fields, lowerClassName) {
 }
 
 
-function generateToJSONarray_dart(className) {
+function generate_to_json_array_dart(className) {
     let lower = className.toLowerCase();
     let res = `
-    static dynamic toJSONArray(List<${className}> ${lower}Array) {
+    static dynamic to_json_array(List<${className}> ${lower}Array) {
         List<Map<String, dynamic>> ${lower}JSONArray = [];
         for (${className} ${lower} in ${lower}Array) {
-            ${lower}JSONArray.add(toJSON(${lower}));
+            ${lower}JSONArray.add(to_json(${lower}));
         }
         return ${lower}Array;
     }`
 
+    return res;
+}
+
+
+function get_field_init_val(field_item_type) {
+    if (field_item_type == "int" || field_item_type == "double") {
+        return 0;
+    }
+    return `""`;
+}
+
+function init_state_fields(fields) {
+    let res = "";
+    for (const fieldItem of fields) {
+        let init_val = get_field_init_val(fieldItem.type);
+        res += `${fieldItem.label} : ${init_val},\n`;
+    }
+    return res;
+}
+
+
+
+function init_state_var(fields, className) {
+
+    var init_state_fields = "";
+
+    for (const fieldItem of fields) {
+        let init_val = get_field_init_val(fieldItem.type);
+        init_state_fields += `${fieldItem.label} : ${init_val},\n`;
+    }
+
+    let res = `
+    static ${className} init = new ${className} (
+        ${init_state_fields}
+    );`;
+    return res;
+}
+
+
+function generate_constructor(fields, class_name) {
+    var c_item = "";
+
+    for (const fieldItem of fields) {
+        c_item += `required this.${fieldItem.label},\n`;
+    }
+    let res = `
+     ${class_name}({
+        ${c_item}
+     });`;
+    return res;
+}
+
+
+function get_payload_dart(fields) {
+    var c_item = "";
+
+    for (const fieldItem of fields) {
+        c_item += `"${fieldItem.label}":"$${fieldItem.label}",\n`;
+    }
+    let res = `
+    get_payload(){
+        return {
+            ${c_item}
+        };
+     }
+     `;
     return res;
 }
