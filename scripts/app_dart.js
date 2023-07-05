@@ -80,12 +80,12 @@ function generateParsingFields_dart(fields, lowerClassName) {
 function generate_from_json_array_dart(className) {
     let lower = className.toLowerCase();
     let res = `
-        static List<${className}> from_json_array(${lower}JSONArray) {
-            List<${className}> ${lower}Array = [];
-            for (var ${lower}Item in ${lower}JSONArray) {
-                ${lower}Array.add(from_json(${lower}Item));
+        static List<${className}> from_json_array(${lower}_json_array) {
+            List<${className}> ${lower}_array = [];
+            for (var ${lower}Item in ${lower}_json_array) {
+                ${lower}_array.add(from_json(${lower}Item));
             }
-            return ${lower}Array;
+            return ${lower}_array;
         }
     `
     return res;
@@ -96,7 +96,7 @@ function generate_to_json_dart(fields, className) {
     let parsingFields = generateParsingFieldsto_json_dart(fields, lowerClassName);
     let res = `
     static dynamic to_json(${className} ${lowerClassName}) {
-        Map<String,dynamic> data = HashMap();
+        Map<String,dynamic> data = {};
         data.addAll({
             ${parsingFields}
         });
@@ -118,12 +118,12 @@ function generateParsingFieldsto_json_dart(fields, lowerClassName) {
 function generate_to_json_array_dart(className) {
     let lower = className.toLowerCase();
     let res = `
-    static dynamic to_json_array(List<${className}> ${lower}Array) {
-        List<Map<String, dynamic>> ${lower}JSONArray = [];
-        for (${className} ${lower} in ${lower}Array) {
-            ${lower}JSONArray.add(to_json(${lower}));
+    static dynamic to_json_array(List<${className}> ${lower}_array) {
+        List<Map<String, dynamic>> ${lower}_json_array = [];
+        for (${className} ${lower} in ${lower}_array) {
+            ${lower}_json_array.add(to_json(${lower}));
         }
-        return ${lower}Array;
+        return ${lower}_array;
     }`
 
     return res;
@@ -133,6 +133,10 @@ function generate_to_json_array_dart(className) {
 function get_field_init_val(field_item_type) {
     if (field_item_type == "int" || field_item_type == "double") {
         return 0;
+    }
+
+    if (field_item_type == "bool") {
+        return false;
     }
     return `""`;
 }
@@ -192,5 +196,38 @@ function get_payload_dart(fields) {
         };
      }
      `;
+    return res;
+}
+
+function generate_clone_dart(class_name, fields) {
+    let lower = class_name.toLowerCase();
+    var c_item = "";
+
+    for (const fieldItem of fields) {
+        c_item += `${fieldItem.label}:this.${fieldItem.label},\n`;
+    }
+
+    let res = `
+     ${class_name} clone(){
+        ${class_name}  ${lower} = ${class_name}(
+        ${c_item}
+        );
+        return ${lower};
+    }`;
+
+    return res;
+}
+
+function generate_ankh_init(fields) {
+    var c_item = "";
+
+    for (const fieldItem of fields) {
+        c_item += `${fieldItem.type} ${fieldItem.label};\n`;
+    }
+    let res = `
+    static String ankh_init = """
+    ${c_item}
+    """;
+    `
     return res;
 }

@@ -33,8 +33,10 @@ function generateTypeScriptCode(input) {
     let fromJSON = generateToJSON(fields, className);
     let fromJSONarray = generateToJSONarray(className);
     let clone = generate_clone(fields, className);
+    let ankh_init = generate_ankh_init_ts();
 
     res = `
+    ${ankh_init}
     ${clone}
     ${toJSON}
     ${toJSONarray}
@@ -42,6 +44,8 @@ function generateTypeScriptCode(input) {
     ${fromJSONarray}
     `
     document.querySelector("#result").value = res;
+
+    
 }
 
 function generateDartCode(input) {
@@ -60,14 +64,19 @@ function generateDartCode(input) {
     let fromJSON = generate_to_json_dart(fields, className);
     let fromJSONarray = generate_to_json_array_dart(className);
 
+
     let init_state = init_state_var(fields, className);
     let constructor = generate_constructor(fields, className);
     let get_payload = get_payload_dart(fields);
+    let clone = generate_clone_dart(className, fields);
+    let ankh = generate_ankh_init(fields);
 
     res = `
     ${constructor}
     ${init_state}
+    ${ankh}
     ${get_payload}
+    ${clone}
     ${toJSON}
     ${toJSONarray}
     ${fromJSON}
