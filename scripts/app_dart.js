@@ -123,7 +123,7 @@ function generate_to_json_array_dart(className) {
         for (${className} ${lower} in ${lower}_array) {
             ${lower}_json_array.add(to_json(${lower}));
         }
-        return ${lower}_array;
+        return ${lower}_json_array;
     }`
 
     return res;
